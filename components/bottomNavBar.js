@@ -6,6 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { navy } from '../screens/home';
 import Profile from '../screens/profile';
 import InputMeds from '../screens/inputMed';
+import History from '../screens/history';
 
 const Tab = createBottomTabNavigator()
 
@@ -37,7 +38,7 @@ export default function BottomNavBar() {
 
             <Tab.Screen 
             name='History'
-            component={Home}
+            component={History}
             options={{headerShown:false, 
                 tabBarIcon: () => (
                     <MaterialIcons name="schedule" color={navy} size={30} />

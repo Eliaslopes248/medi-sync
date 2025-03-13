@@ -43,11 +43,14 @@ export default function Home({ route }) {
     if (!accountData || !accountData.medications) return;
 
     const med = accountData.medications[medIndex];
+    const today = new Date();
+    const timestamp = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
     const medication_taken = {
       medname: med.medname,
       category: med.category,
       dose: med.dose,
       time: time,
+      timestamp: timestamp,
     };
 
     setAccountData((prev) => {
