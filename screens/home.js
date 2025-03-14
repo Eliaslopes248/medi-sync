@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Alert, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -75,6 +75,10 @@ export default function Home({ route }) {
     Alert.alert("Success", "Medication marked as taken");
   };
 
+  const getInfo = (med)=>{
+      Alert.alert("Description:\n" + med.instructions)
+  }
+
   const medication_stack = selectedDay !== null && accountData && accountData.medications
     ? accountData.medications.filter((med) => med.daysTaken.includes(daysOfWeek[selectedDay]))
     : [];
@@ -88,6 +92,9 @@ export default function Home({ route }) {
             <Text style={{ color: '#918f8e' }}>Welcome back</Text>
             <Text style={{ fontSize: 22, fontWeight: 'bold' }}>Elias Lopes 👋</Text>
           </View>
+
+          <Image source={require('../assets/logo.png')} style={{objectFit:'contain', width:90, marginLeft:'auto'}}/>
+
         </View>
 
         <View style={{ borderWidth: 0, padding: 15 }}>
@@ -155,7 +162,7 @@ export default function Home({ route }) {
               </ScrollView>
             </View>
                 <View style={{borderWidth:0, height:'100%', padding:10, right:0, justifyContent:'space-between'}}>
-                    <TouchableOpacity style={{top:10}}>
+                    <TouchableOpacity onPress={()=>getInfo(med)} style={{top:10}}>
                         <MaterialIcons name='info' style={{color:navy, fontSize:30,}}/>
                     </TouchableOpacity>
 

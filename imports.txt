@@ -1,0 +1,6 @@
+npm install @expo/vector-icons @react-native-picker/picker @react-navigation/bottom-tabs
+@react-navigation/native @react-navigation/stack expo expo-status-bar react react-native 
+react-native-dropdown-picker react-native-gesture-handler react-native-radio-buttons-group 
+react-native-reanimated react-native-safe-area-context react-native-screens
+
+npm install --save-dev @babel/core
