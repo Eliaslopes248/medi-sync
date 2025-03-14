@@ -1,15 +1,21 @@
 
-import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View,Image, TouchableOpacity, Alert } from 'react-native'
 import React, { useState, useCallback } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { TextInput } from 'react-native-gesture-handler'
+import {  TextInput } from 'react-native-gesture-handler'
 import { MaterialIcons } from '@expo/vector-icons';
+import { useAuth } from '../components/AuthProvider';
+
+
 
 
 const navy = '#2a4066'
 
 export default function Register({navigation}) {
 
+  // get users
+  const { users} = useAuth()
+  const {addUser} = useAuth()
 
   // use state for the inputed user info
   const [user, setUser] = useState({username:'',password:'',confirmPassword:'',fname:'',lname:'',medication:[]})
@@ -22,6 +28,31 @@ export default function Register({navigation}) {
   }));
   
 }, []);
+
+const attemptRegister = () => {
+  // Check for empty fields
+  if (!user.username || !user.password || !user.confirmPassword || !user.fname || !user.lname) {
+    Alert.alert("Error", "All fields are required.");
+    return;
+  }
+
+  // Check if passwords match
+  if (user.password !== user.confirmPassword) {
+    Alert.alert("Error", "Passwords do not match.");
+    return;
+  }
+
+  // Check if user already exists
+  let found = users.some(userData => userData.username === user.username);
+  if (found) {
+    Alert.alert("Error", "User already exists.");
+    return;
+  }
+
+  // Add user
+  addUser(user);
+  navigation.navigate('Login');
+};
 
 //testing input values
 //console.log(user)
@@ -92,7 +123,7 @@ export default function Register({navigation}) {
         </View>
 
         <View style={{borderWidth:0, padding:0, top:20}}>
-          <TouchableOpacity style={{alignItems:'center', width:'100%',padding:22, borderRadius:30,backgroundColor:'white', borderWidth:1}}>
+          <TouchableOpacity onPress={attemptRegister} style={{alignItems:'center', width:'100%',padding:22, borderRadius:30,backgroundColor:'white', borderWidth:1}}>
             <Text style={{color:navy,fontSize:15, fontWeight:'bold', backgroundColor:'white', alignItems:'center'}}>Register</Text>
           </TouchableOpacity>
         </View>
